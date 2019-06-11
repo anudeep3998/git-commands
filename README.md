@@ -404,6 +404,10 @@ $ git cat-file sha -p
 
 # Show number of lines added and removed from a repository by an author since some time in the past.
 $ git log --author="Author name" --pretty=tformat: --numstat --since=month | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }'
+
+# Remove all local branches that have remote branches deleted. (Needs zsh/bash)
+$ git fetch --prune
+$ git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d
 ```
 
 #### Useful alias
